@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 /** Articulated arm only: every animated SVG group rotates around its actual pin. */
 export default function Excavator() {
   const layer = useRef<HTMLDivElement>(null);
+  const illustration = useRef<SVGSVGElement>(null);
   const arm = useRef<SVGGElement>(null);
   const bucket = useRef<SVGGElement>(null);
   const cylinder = useRef<SVGLineElement>(null);
@@ -13,8 +14,8 @@ export default function Excavator() {
     const mobile = matchMedia('(max-width: 767px)');
     let frame = 0, current = 0, target = 0, previous = 0;
     const paint = (progress: number) => {
-      const angle = 8 + progress * 88;
-      arm.current?.setAttribute('transform', `rotate(${-progress * 5} 685 205)`);
+      const angle = mobile.matches ? 10 + progress * 28 : 8 + progress * 88;
+      arm.current?.setAttribute('transform', `rotate(${-progress * (mobile.matches ? 2 : 5)} 685 205)`);
       bucket.current?.setAttribute('transform', `rotate(${angle} 425 535)`);
       // Cylinder attaches to the bucket bell crank, in the stick's coordinate space.
       const radians = angle * Math.PI / 180;
@@ -41,7 +42,18 @@ export default function Excavator() {
       // This affects emphasis only: the arm never shrinks into a separate side widget.
       const emphasis = Math.max(0, 1 - scrollY / Math.max(innerHeight * .65, 1));
       layer.current?.style.setProperty('--arm-opacity', String(.16 + emphasis * .68));
-      if (motion.matches || mobile.matches) {
+      if (mobile.matches) {
+        illustration.current?.setAttribute('viewBox', '205 390 440 425');
+        const trust = document.querySelector('.hero-trust');
+        // The crop's upper-right corner is only the stick; the bucket begins lower,
+        // leaving the trust row and all CTA hit targets clear even on short phones.
+        const top = Math.max(160, (trust?.getBoundingClientRect().bottom ?? innerHeight * .65) - 28);
+        layer.current?.style.setProperty('--mobile-arm-top', `${top}px`);
+        layer.current?.style.setProperty('--mobile-arm-opacity', String(.14 + emphasis * .72));
+      } else {
+        illustration.current?.setAttribute('viewBox', '0 0 1100 850');
+      }
+      if (motion.matches) {
         cancelAnimationFrame(frame); frame = 0; previous = 0;
         current = target = .28; paint(current); return;
       }
@@ -63,7 +75,7 @@ export default function Excavator() {
   }, []);
 
   return <div className="machine-layer" ref={layer} aria-hidden="true">
-    <svg className="excavator" viewBox="0 0 1100 850" fill="none">
+    <svg className="excavator" ref={illustration} viewBox="0 0 1100 850" fill="none">
       <defs>
         <linearGradient id="arm-paint" x1="650" y1="140" x2="480" y2="570" gradientUnits="userSpaceOnUse"><stop stopColor="#ffc77e"/><stop offset=".38" stopColor="#ea8b3c"/><stop offset="1" stopColor="#b75424"/></linearGradient>
         <linearGradient id="arm-side" x1="500" y1="240" x2="650" y2="380" gradientUnits="userSpaceOnUse"><stop stopColor="#be612c"/><stop offset="1" stopColor="#7c3d22"/></linearGradient>

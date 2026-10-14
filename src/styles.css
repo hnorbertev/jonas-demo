@@ -27,5 +27,6 @@ main>section>*{position:relative;z-index:2}
 .excavator{display:block;width:100%;height:100%;overflow:visible}
 @media(min-width:1600px){.machine-layer{right:-190px}}
 @media(min-width:768px) and (max-width:1023px){.machine-layer{right:-36vw;top:100px;width:100vw;opacity:calc(var(--arm-opacity,.84) * .42)}}
-/* A quiet, static silhouette remains on phones without using any layout space. */
-@media(max-width:767px){.machine-layer{right:-300px;top:auto;bottom:15svh;width:560px;height:430px;opacity:.07;mask-image:linear-gradient(90deg,transparent 15%,#000 60%)}.excavator{shape-rendering:optimizeSpeed}}
+/* Mobile crop gives the bucket its own clear space beneath the hero actions. */
+@media(max-width:767px){.hero-content{padding-bottom:250px}.machine-layer{right:-48px;top:var(--mobile-arm-top,600px);bottom:auto;width:270px;height:245px;opacity:var(--mobile-arm-opacity,.86);mask-image:linear-gradient(90deg,transparent 0%,#000 16%);overflow:hidden}.excavator{overflow:hidden;shape-rendering:optimizeSpeed}}
+
