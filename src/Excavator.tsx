@@ -1,6 +1,23 @@
 import { useEffect, useRef } from 'react';
+import './excavator.css';
 
-/** Articulated arm only: every animated SVG group rotates around its actual pin. */
+const COMPOSITIONS = {
+  desktop: { viewBox: '100 65 1100 760', bucketTravel: 88, armTravel: 5 },
+  compact: { viewBox: '100 130 660 700', bucketTravel: 72, armTravel: 2 },
+};
+
+// Protect coherent content groups, not individual lines that would slice the machine.
+const PROTECTED_CONTENT = [
+  '.hero-content', '.hero-content > *', '.hero-bottom > *', '.section-label', '.intro-grid > *',
+  'main > section > h2', '.section-heading > *', '.category-list', '.category > div', '.category-icon', '.category-number', '.category-arrow',
+  '.product-note', '.material-strip', '.delivery > div', '.delivery-icon',
+  '.benefit-grid article', '.review-grid', '.snapshot',
+  '.contact-cta > h2', '.contact-cta > p', '.contact-cta > .actions',
+  '.contact > h2', '.contact-grid > div', 'footer > *',
+].join(',');
+
+type Bounds = { left: number; top: number; right: number; bottom: number };
+
 export default function Excavator() {
   const layer = useRef<HTMLDivElement>(null);
   const illustration = useRef<SVGSVGElement>(null);
@@ -10,90 +27,112 @@ export default function Excavator() {
   const rod = useRef<SVGLineElement>(null);
 
   useEffect(() => {
-    const motion = matchMedia('(prefers-reduced-motion: reduce)');
-    const mobile = matchMedia('(max-width: 1023px)');
-    let frame = 0, current = 0, target = 0, previous = 0;
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+    const compact = matchMedia('(max-width: 1023px)');
+    let composition = compact.matches ? COMPOSITIONS.compact : COMPOSITIONS.desktop;
+    let frame = 0, current = 0, target = 0, lastTime = 0;
     let maskDirty = true, disposed = false;
-    // Cut clear space around actual text lines and controls rather than fading the art.
-    // Coordinates belong to the viewport-fixed layer, not to a scrolling section.
-    const protectContent = () => {
+    const protectedNodes = Array.from(document.querySelectorAll<HTMLElement>(PROTECTED_CONTENT));
+
+    const maskContent = () => {
       const root = layer.current;
       if (!root) return;
-      const top = root.getBoundingClientRect().top;
-      const rectangles: string[] = [];
-      const add = (rect: DOMRect, padding = 5) => {
-        if (!rect.width || !rect.height || rect.bottom < top || rect.top > innerHeight) return;
-        rectangles.push(`<rect x="${rect.left - padding}" y="${rect.top - top - padding}" width="${rect.width + padding * 2}" height="${rect.height + padding * 2}" rx="4" fill="black"/>`);
-      };
-      document.querySelectorAll('main, footer').forEach(container => {
-        const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
+      const viewport = root.getBoundingClientRect();
+      const regions: Bounds[] = [];
+      for (const element of protectedNodes) {
+        if (element.matches('.hero-content') && !compact.matches) continue;
+        if (element.matches('.hero-content > *') && compact.matches) continue;
+        // On compact screens the list is a dense text surface. Hide the decoration behind
+        // that surface as a whole instead of exposing broken strips between rows.
+        if (element.matches('.category-list') && !compact.matches) continue;
+        if (element.matches('.category > div') && compact.matches) continue;
+        const box = element.getBoundingClientRect();
+        if (!box.width || !box.height || box.bottom < viewport.top || box.top > viewport.bottom) continue;
+        // Use the actual text extents so unused grid width remains available to the art.
+        const rects: DOMRect[] = [];
+        const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
         let node: Node | null;
         while ((node = walker.nextNode())) {
           if (!node.textContent?.trim()) continue;
           const range = document.createRange();
           range.selectNodeContents(node);
-          for (const rect of range.getClientRects()) add(rect);
+          rects.push(...Array.from(range.getClientRects()));
         }
-      });
-      document.querySelectorAll('main .button, main img, footer a').forEach(node => add(node.getBoundingClientRect(), 7));
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${innerWidth}" height="${innerHeight - top}"><rect width="100%" height="100%" fill="white"/>${rectangles.join('')}</svg>`;
-      root.style.maskImage = `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
-      root.style.maskMode = 'luminance';
+        element.querySelectorAll('.button, img, svg').forEach(child => rects.push(child.getBoundingClientRect()));
+        if (element.matches('svg, .category-number, .material-strip, .category-list')) rects.push(box);
+        if (!rects.length) continue;
+        const padding = 14;
+        const region: Bounds = {
+          left: Math.min(...rects.map(rect => rect.left)) - padding,
+          right: Math.max(...rects.map(rect => rect.right)) + padding,
+          top: Math.min(...rects.map(rect => rect.top)) - viewport.top - padding,
+          bottom: Math.max(...rects.map(rect => rect.bottom)) - viewport.top + padding,
+        };
+        if (element.matches('.hero-content')) {
+          region.left = box.left - padding;
+          region.right = box.right + padding;
+        }
+        regions.push(region);
+      }
+      const shapes = regions.map(rect => `<rect x="${rect.left}" y="${rect.top}" width="${rect.right - rect.left}" height="${rect.bottom - rect.top}" rx="16"/>`).join('');
+      const mask = `<svg xmlns="http://www.w3.org/2000/svg" width="${viewport.width}" height="${viewport.height}"><defs><filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8"/></filter></defs><rect width="100%" height="100%" fill="white"/><g fill="black" filter="url(#soft)">${shapes}</g></svg>`;
+      root.style.maskImage = `url("data:image/svg+xml,${encodeURIComponent(mask)}")`;
+      root.dataset.ready = 'true';
     };
+
     const paint = (progress: number) => {
-      const angle = mobile.matches ? 8 + progress * 72 : 8 + progress * 88;
-      arm.current?.setAttribute('transform', `rotate(${-progress * (mobile.matches ? 2 : 5)} 685 205)`);
+      const angle = 8 + progress * composition.bucketTravel;
+      arm.current?.setAttribute('transform', `rotate(${-progress * composition.armTravel} 685 205)`);
       bucket.current?.setAttribute('transform', `rotate(${angle} 425 535)`);
-      // Cylinder attaches to the bucket bell crank, in the stick's coordinate space.
       const radians = angle * Math.PI / 180;
-      const x = 425 + 32 * Math.cos(radians) + 59 * Math.sin(radians);
-      const y = 535 + 32 * Math.sin(radians) - 59 * Math.cos(radians);
-      cylinder.current?.setAttribute('x2', String(569 + (x - 569) * .57));
-      cylinder.current?.setAttribute('y2', String(320 + (y - 320) * .57));
-      rod.current?.setAttribute('x2', String(x));
-      rod.current?.setAttribute('y2', String(y));
+      const endX = 425 + 32 * Math.cos(radians) + 59 * Math.sin(radians);
+      const endY = 535 + 32 * Math.sin(radians) - 59 * Math.cos(radians);
+      cylinder.current?.setAttribute('x2', String(569 + (endX - 569) * .57));
+      cylinder.current?.setAttribute('y2', String(320 + (endY - 320) * .57));
+      rod.current?.setAttribute('x2', String(endX));
+      rod.current?.setAttribute('y2', String(endY));
     };
+
     const tick = (time: number) => {
-      if (maskDirty) { protectContent(); maskDirty = false; }
-      const delta = previous ? Math.min(time - previous, 64) : 16;
-      previous = time;
-      current += (target - current) * (1 - Math.exp(-delta / 85));
-      if (Math.abs(target - current) < .0002) current = target;
+      if (maskDirty) { maskContent(); maskDirty = false; }
+      const delta = lastTime ? Math.min(time - lastTime, 64) : 16;
+      lastTime = time;
+      current = reducedMotion.matches ? .28 : current + (target - current) * (1 - Math.exp(-delta / 85));
+      if (!reducedMotion.matches && Math.abs(target - current) < .0002) current = target;
       paint(current);
-      if (current !== target) frame = requestAnimationFrame(tick);
-      else { frame = 0; previous = 0; }
+      if (!reducedMotion.matches && current !== target) frame = requestAnimationFrame(tick);
+      else { frame = 0; lastTime = 0; }
     };
     const update = () => {
       if (disposed) return;
       const range = document.documentElement.scrollHeight - innerHeight;
-      const progress = range > 0 ? Math.min(1, Math.max(0, scrollY / range)) : 0;
+      target = range > 0 ? Math.max(0, Math.min(1, scrollY / range)) : 0;
       maskDirty = true;
-      // Both responsive compositions share document scroll progress.
-      illustration.current?.setAttribute('viewBox', mobile.matches ? '150 130 610 680' : '0 0 1100 850');
-      if (motion.matches) {
-        cancelAnimationFrame(frame); frame = 0; previous = 0;
-        current = target = .28; paint(current); frame = requestAnimationFrame(tick); return;
-      }
-      target = progress;
       if (!frame) frame = requestAnimationFrame(tick);
     };
-    const observer = new ResizeObserver(update);
+    const resize = () => {
+      if (disposed) return;
+      composition = compact.matches ? COMPOSITIONS.compact : COMPOSITIONS.desktop;
+      illustration.current?.setAttribute('viewBox', composition.viewBox);
+      update();
+    };
+    const observer = new ResizeObserver(resize);
     observer.observe(document.documentElement);
     window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-    motion.addEventListener('change', update);
-    mobile.addEventListener('change', update);
-    update();
-    void document.fonts.ready.then(update);
+    window.addEventListener('resize', resize);
+    reducedMotion.addEventListener('change', update);
+    compact.addEventListener('change', resize);
+    resize();
+    void document.fonts.ready.then(resize);
     return () => {
       disposed = true; cancelAnimationFrame(frame); observer.disconnect();
-      window.removeEventListener('scroll', update); window.removeEventListener('resize', update);
-      motion.removeEventListener('change', update); mobile.removeEventListener('change', update);
+      window.removeEventListener('scroll', update); window.removeEventListener('resize', resize);
+      reducedMotion.removeEventListener('change', update); compact.removeEventListener('change', resize);
     };
   }, []);
 
   return <div className="machine-layer" ref={layer} aria-hidden="true">
-    <svg className="excavator" ref={illustration} viewBox="0 0 1100 850" fill="none">
+    <svg className="excavator" ref={illustration} viewBox={COMPOSITIONS.desktop.viewBox} preserveAspectRatio="xMidYMid meet" fill="none">
       <defs>
         <linearGradient id="arm-paint" x1="650" y1="140" x2="480" y2="570" gradientUnits="userSpaceOnUse"><stop stopColor="#ffc77e"/><stop offset=".38" stopColor="#ea8b3c"/><stop offset="1" stopColor="#b75424"/></linearGradient>
         <linearGradient id="arm-side" x1="500" y1="240" x2="650" y2="380" gradientUnits="userSpaceOnUse"><stop stopColor="#be612c"/><stop offset="1" stopColor="#7c3d22"/></linearGradient>

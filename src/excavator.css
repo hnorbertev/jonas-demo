@@ -1,0 +1,59 @@
+/* A single stacking order; main/sections deliberately do not create stacking contexts.
+   0: original section paints, 1: global decoration, 2: content, 10: header. */
+:root { --header-height: 96px; }
+body { isolation: isolate; }
+.section-pad::before,
+footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--section-bg, var(--paper));
+}
+footer::before { background: var(--ink); }
+main > section > *,
+footer > * { position: relative; z-index: 2; }
+
+/* This root child is the only fixed box. It never receives a transform. */
+.machine-layer {
+  position: fixed;
+  inset: var(--header-height) 0 0;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+  overflow: clip; /* Only clip intentional desktop overscan at the viewport edge. */
+  mask-mode: luminance;
+  visibility: hidden;
+}
+.machine-layer[data-ready='true'] { visibility: visible; }
+
+/* Fit the measured world-space sweep (1100 × 760) with one uniform scale.
+   Width and height are not independent constraints; no SVG letterboxing. */
+.excavator {
+  position: absolute;
+  right: -13vw;
+  top: 50%;
+  transform: translateY(-50%);
+  display: block;
+  width: min(76vw, 1180px, calc((100svh - var(--header-height) - 32px) * 1.447368));
+  height: auto;
+  aspect-ratio: 1100 / 760;
+  overflow: visible;
+}
+
+@media (max-width: 1023px) {
+  :root { --header-height: 80px; }
+  .excavator {
+    left: 50%;
+    right: auto;
+    top: 62%;
+    transform: translate(-50%, -50%);
+    width: min(88vw, 480px, calc((100svh - var(--header-height)) * .66));
+    aspect-ratio: 660 / 700;
+  }
+  .excavator-boom { display: none; }
+}
+@media (max-width: 600px) {
+  :root { --header-height: 76px; }
+}
