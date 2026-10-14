@@ -13,8 +13,35 @@ export default function Excavator() {
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     const mobile = matchMedia('(max-width: 1023px)');
     let frame = 0, current = 0, target = 0, previous = 0;
+    let maskDirty = true, disposed = false;
+    // Cut clear space around actual text lines and controls rather than fading the art.
+    // Coordinates belong to the viewport-fixed layer, not to a scrolling section.
+    const protectContent = () => {
+      const root = layer.current;
+      if (!root) return;
+      const top = root.getBoundingClientRect().top;
+      const rectangles: string[] = [];
+      const add = (rect: DOMRect, padding = 5) => {
+        if (!rect.width || !rect.height || rect.bottom < top || rect.top > innerHeight) return;
+        rectangles.push(`<rect x="${rect.left - padding}" y="${rect.top - top - padding}" width="${rect.width + padding * 2}" height="${rect.height + padding * 2}" rx="4" fill="black"/>`);
+      };
+      document.querySelectorAll('main, footer').forEach(container => {
+        const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
+        let node: Node | null;
+        while ((node = walker.nextNode())) {
+          if (!node.textContent?.trim()) continue;
+          const range = document.createRange();
+          range.selectNodeContents(node);
+          for (const rect of range.getClientRects()) add(rect);
+        }
+      });
+      document.querySelectorAll('main .button, main img, footer a').forEach(node => add(node.getBoundingClientRect(), 7));
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${innerWidth}" height="${innerHeight - top}"><rect width="100%" height="100%" fill="white"/>${rectangles.join('')}</svg>`;
+      root.style.maskImage = `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+      root.style.maskMode = 'luminance';
+    };
     const paint = (progress: number) => {
-      const angle = mobile.matches ? 8 + progress * 38 : 8 + progress * 88;
+      const angle = mobile.matches ? 8 + progress * 72 : 8 + progress * 88;
       arm.current?.setAttribute('transform', `rotate(${-progress * (mobile.matches ? 2 : 5)} 685 205)`);
       bucket.current?.setAttribute('transform', `rotate(${angle} 425 535)`);
       // Cylinder attaches to the bucket bell crank, in the stick's coordinate space.
@@ -27,6 +54,7 @@ export default function Excavator() {
       rod.current?.setAttribute('y2', String(y));
     };
     const tick = (time: number) => {
+      if (maskDirty) { protectContent(); maskDirty = false; }
       const delta = previous ? Math.min(time - previous, 64) : 16;
       previous = time;
       current += (target - current) * (1 - Math.exp(-delta / 85));
@@ -36,19 +64,15 @@ export default function Excavator() {
       else { frame = 0; previous = 0; }
     };
     const update = () => {
-      const hero = layer.current?.closest<HTMLElement>('.hero');
-      const heroRect = hero?.getBoundingClientRect();
+      if (disposed) return;
       const range = document.documentElement.scrollHeight - innerHeight;
-      const progress = mobile.matches && heroRect
-        ? Math.min(1, Math.max(0, -heroRect.top / Math.max(heroRect.height, 1)))
-        : range > 0 ? Math.min(1, Math.max(0, scrollY / range)) : 0;
-      const emphasis = Math.max(0, 1 - scrollY / Math.max(innerHeight * .65, 1));
-      layer.current?.style.setProperty('--arm-opacity', String(.16 + emphasis * .68));
-      // The mobile composition frames the complete stick and bucket, without the boom.
-      illustration.current?.setAttribute('viewBox', mobile.matches ? '180 130 580 680' : '0 0 1100 850');
+      const progress = range > 0 ? Math.min(1, Math.max(0, scrollY / range)) : 0;
+      maskDirty = true;
+      // Both responsive compositions share document scroll progress.
+      illustration.current?.setAttribute('viewBox', mobile.matches ? '150 130 610 680' : '0 0 1100 850');
       if (motion.matches) {
         cancelAnimationFrame(frame); frame = 0; previous = 0;
-        current = target = .28; paint(current); return;
+        current = target = .28; paint(current); frame = requestAnimationFrame(tick); return;
       }
       target = progress;
       if (!frame) frame = requestAnimationFrame(tick);
@@ -60,8 +84,9 @@ export default function Excavator() {
     motion.addEventListener('change', update);
     mobile.addEventListener('change', update);
     update();
+    void document.fonts.ready.then(update);
     return () => {
-      cancelAnimationFrame(frame); observer.disconnect();
+      disposed = true; cancelAnimationFrame(frame); observer.disconnect();
       window.removeEventListener('scroll', update); window.removeEventListener('resize', update);
       motion.removeEventListener('change', update); mobile.removeEventListener('change', update);
     };
@@ -126,4 +151,5 @@ export default function Excavator() {
     </svg>
   </div>;
 }
+
 

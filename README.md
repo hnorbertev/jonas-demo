@@ -23,17 +23,18 @@ Importálja ezt a projektmappát egy Git-tárolóból a Vercelbe, vagy futtassa 
 
 ## Markoló
 
-A `src/Excavator.tsx` egyedi SVG-t és külön transzformálható kar/kanál csoportot tartalmaz. A kanál rögzítőcsapja `(425, 535)`, a kar csuklója `(685, 205)`. A hidraulikarúd a forgatott kanálhoz kapcsolódó végpontot követi. A dokumentum teljes görgetési tartománya vezérli a kanál 8–96° közötti forgását, időalapú requestAnimationFrame simítással. Felfelé görgetve ugyanaz az interpoláció fordul vissza. Nincs wheel esemény vagy görgetésátvétel. Nyugalomban nincs folyamatos animációs ciklus.
+A `src/Excavator.tsx` gyökérszintű, viewporthoz rögzített dekoráció: minden képernyőméreten a fejléc alatt marad, a teljes oldalon. Nem a hero része, nincs helyfoglaló blokkja vagy oldalsávja. Desktopon a gém jobbról nyúlik be; 1024 px alatt a rövid kar és a teljes kanál a képernyő középső területén jelenik meg, a rendelkezésre álló magasságba komponálva.
 
-1024 px-től a markoló fix, oldalszintű réteg, amely a jobb szélről lóg be, külön oldalsáv nélkül. A szekcióhátterek az SVG alatt, a tartalmak felette helyezkednek el; a nyitó szakasz után a grafika halványodik.
+A szekciók és a lábléc hátterei a grafika alatt, a szöveges és interaktív tartalmak felette helyezkednek el. A globális réteg nem fogad pointer eseményt. Nincs általános halványítás: a tényleges szövegsorok és CTA-gombok körül viewport-koordinátákban számított luminanciamaszk tart tiszta területet. Ez a szekció eredeti háttérszínét mutatja a szöveg mögött. A maszk görgetéskor, átméretezéskor és a betűk betöltése után frissül, a pozíció és az elrendezés változtatása nélkül.
 
-1024 px alatt ugyanaz az SVG a relative hero szövege, CTA-i és Google-értékelései alatti, előre méretezett vizuális terében, abszolút dekorációs rétegként látható. A grafika középre igazított, és a gép gémje helyett a teljes rövid kar és kanál szerepel rajta. A `180 130 580 680` viewBox a teljes rövid kart és a kanál mozgástartományát foglalja be, levágott géprészlet nélkül. A grafikai blokk előre lefoglalt magasságú, overflow-clippelt, nem fix vagy sticky, és nem lóg át más szekcióba. A hero görgetési előrehaladása vezérli a 8–46° közötti kanálmozgást. A hero elhagyása után a rajz is kigördül a képernyőről.
+A kanál rögzítőcsapja `(425, 535)`, a kar csuklója `(685, 205)`. A hidraulikarúd a forgatott kanálhoz kapcsolódó végpontot követi. A teljes dokumentum görgetési aránya vezérli a kanál állását minden nézeten: desktopon 8–96°, mobilon 8–80°. A requestAnimationFrame csak a görgetési célérték finom követését végzi; nincs automatikus mozgás vagy wheel-event animáció. Nyugalomban az animációs ciklus leáll. Felfelé görgetve ugyanaz az interpoláció visszanyitja a kanalat.
 
-A `prefers-reduced-motion` statikus, köztes pózt ad mindkét megjelenítésben. A dekoráció nem fogad pointer eseményt; a scrollanimáció csak SVG-transzformációkat és a hidraulika végpontjait módosítja, a grafikai blokk méretét nem.
+A `prefers-reduced-motion` statikus köztes pózt ad. A szövegvédő maszk ekkor is frissül görgetésre, de a kar és a kanál nem animálódik.
 
 ## Tartalom és képek
 
 Az adatlap és az implementációs brief adatai kerültek az oldalra. Az értékelések kutatási pillanatképek; az árak, készlet és szállítási feltételek telefonos egyeztetést igényelnek. A `szen.jpg` és `zsakosaru.jpg` kisméretű termékfotóként szerepel. A zsúfolt logó és a két kevésbé használható fotó megmaradt az assets mappában, de nem töltődik le az oldallal. A betűk Google Fonts-ról tölthetők be, rendszerbetűs tartalékkal. Ez bemutató oldal, nem hivatalos üzleti webhely.
+
 
 
 

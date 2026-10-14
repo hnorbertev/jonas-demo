@@ -49,6 +49,7 @@ function App() {
       <a className="header-call" href={phone}><Icon name="phone"/><span>Hívás</span></a>
       <button className="menu-toggle" ref={menuButton} aria-expanded={menu} aria-controls="fo-menu" aria-label={menu ? 'Menü bezárása' : 'Menü megnyitása'} onClick={() => setMenu(!menu)}><span/><span/><span/></button>
     </header>
+    <Excavator />
     <main id="tartalom">
       <section className="hero">
         <div className="hero-content">
@@ -58,7 +59,6 @@ function App() {
           <div className="actions"><a className="button primary" href={phone}><Icon name="phone"/> Hívjon minket <Icon name="arrow"/></a><a className="text-link" href="#termekek">Termékkategóriák <Icon name="arrow"/></a></div>
           <div className="hero-trust"><span className="stars" aria-label="Google-értékelés">★★★★★</span><strong>4,6 / 5</strong><span>30 Google-vélemény alapján*</span></div>
         </div>
-        <div className="hero-visual"><Excavator /></div>
         <div className="hero-bottom"><span><Icon name="pin"/> Esztergom, Dorogi út 5/D</span><a href="#termekek">ISMERJE MEG A KÍNÁLATOT <span>↓</span></a></div>
       </section>
       <section className="intro section-pad">
