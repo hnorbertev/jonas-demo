@@ -14,7 +14,7 @@ export default function Excavator() {
     const mobile = matchMedia('(max-width: 1023px)');
     let frame = 0, current = 0, target = 0, previous = 0;
     const paint = (progress: number) => {
-      const angle = mobile.matches ? 8 + progress * 57 : 8 + progress * 88;
+      const angle = mobile.matches ? 8 + progress * 38 : 8 + progress * 88;
       arm.current?.setAttribute('transform', `rotate(${-progress * (mobile.matches ? 2 : 5)} 685 205)`);
       bucket.current?.setAttribute('transform', `rotate(${angle} 425 535)`);
       // Cylinder attaches to the bucket bell crank, in the stick's coordinate space.
@@ -44,9 +44,8 @@ export default function Excavator() {
         : range > 0 ? Math.min(1, Math.max(0, scrollY / range)) : 0;
       const emphasis = Math.max(0, 1 - scrollY / Math.max(innerHeight * .65, 1));
       layer.current?.style.setProperty('--arm-opacity', String(.16 + emphasis * .68));
-      // This square composition contains the entire bucket sweep and stick;
-      // only the boom intentionally continues beyond the upper-right edge.
-      illustration.current?.setAttribute('viewBox', mobile.matches ? '150 160 650 650' : '0 0 1100 850');
+      // The mobile composition frames the complete stick and bucket, without the boom.
+      illustration.current?.setAttribute('viewBox', mobile.matches ? '180 130 580 680' : '0 0 1100 850');
       if (motion.matches) {
         cancelAnimationFrame(frame); frame = 0; previous = 0;
         current = target = .28; paint(current); return;
@@ -78,6 +77,7 @@ export default function Excavator() {
       </defs>
       <g stroke="#303a32" strokeWidth="4" strokeLinejoin="round" strokeLinecap="round">
         {/* The boom continues beyond the right viewport edge; no cab or chassis. */}
+        <g className="excavator-boom">
         <path d="m1160 370-118 75-380-195 21-69 61-26 416 215Z" fill="url(#arm-side)"/>
         <path d="m1154 333-96 78-397-178 11-63 52-26 430 189Z" fill="url(#arm-paint)"/>
         <path d="m750 174 302 147-23 17-297-137Z" fill="#f8b663" strokeWidth="2"/>
@@ -89,6 +89,7 @@ export default function Excavator() {
         <path d="M1140 307 788 148q-70-39-106 16" stroke="#303a32" strokeWidth="8"/>
         <path d="M1121 322 785 163q-61-31-92 10" stroke="#8e9886" strokeWidth="3"/>
         <path d="m972 279 22 10m-45-20 8 4" stroke="#ffcf8c" strokeWidth="3"/>
+        </g>
         <g ref={arm} data-joint="arm">
           <path d="m690 177-37-6-254 344 33 42 39-5 240-322-21-53Z" fill="url(#arm-side)"/>
           <path d="m677 168-31 4-252 340 28 40 35-14 239-321-19-49Z" fill="url(#arm-paint)"/>

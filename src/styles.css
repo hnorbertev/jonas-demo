@@ -26,15 +26,19 @@ main>section>*{position:relative;z-index:2}
 .machine-layer{position:fixed;right:-13vw;top:105px;width:min(76vw,1180px);height:calc(100svh - 105px);z-index:1;pointer-events:none;user-select:none;overflow:hidden;opacity:var(--arm-opacity,.84);mask-image:linear-gradient(90deg,transparent 15%,#000 44%)}
 .excavator{display:block;width:100%;height:100%;overflow:visible}
 @media(min-width:1600px){.machine-layer{right:-190px}}
-/* Desktop keeps its page-level layer; smaller screens get a real hero grid item. */
-.hero>.machine-layer{z-index:1}
+/* The wrapper is layout-transparent on desktop; the existing fixed layer is unchanged. */
+.hero-visual{display:contents}
 @media(max-width:1023px){
-  .hero{overflow:hidden}
+  .hero{position:relative;overflow:hidden}
   .hero-content{padding-bottom:24px}
-  .hero>.machine-layer{
-    position:relative;inset:auto;flex:none;align-self:stretch;
-    width:100%;height:clamp(300px,70vw,460px);margin:0 0 24px;
+  .hero>.hero-visual{
+    display:block;position:relative;flex:none;align-self:stretch;
+    width:100%;height:clamp(320px,76vw,480px);margin:0 0 24px;z-index:1;
+  }
+  .hero-visual>.machine-layer{
+    position:absolute;inset:0;width:min(100%,480px);height:100%;margin:auto;
     opacity:1;mask-image:none;overflow:hidden;contain:paint;
   }
   .machine-layer .excavator{width:100%;height:100%;overflow:hidden}
+  .excavator-boom{display:none}
 }

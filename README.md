@@ -27,13 +27,14 @@ A `src/Excavator.tsx` egyedi SVG-t és külön transzformálható kar/kanál cso
 
 1024 px-től a markoló fix, oldalszintű réteg, amely a jobb szélről lóg be, külön oldalsáv nélkül. A szekcióhátterek az SVG alatt, a tartalmak felette helyezkednek el; a nyitó szakasz után a grafika halványodik.
 
-1024 px alatt ugyanaz az SVG a hero normál dokumentumfolyamában, a szöveg, CTA-k és Google-értékelések alatti külön grafikai blokkban látható. A `150 160 650 650` viewBox a kanál teljes mozgástartományát és a kart foglalja be; csak a gém folytatása lép ki a jobb felső szélen. A grafikai blokk előre lefoglalt magasságú, overflow-clippelt, nem fix vagy sticky, és nem lóg át más szekcióba. A hero görgetési előrehaladása vezérli a 8–65° közötti kanálmozgást. A hero elhagyása után a rajz is kigördül a képernyőről.
+1024 px alatt ugyanaz az SVG a relative hero szövege, CTA-i és Google-értékelései alatti, előre méretezett vizuális terében, abszolút dekorációs rétegként látható. A grafika középre igazított, és a gép gémje helyett a teljes rövid kar és kanál szerepel rajta. A `180 130 580 680` viewBox a teljes rövid kart és a kanál mozgástartományát foglalja be, levágott géprészlet nélkül. A grafikai blokk előre lefoglalt magasságú, overflow-clippelt, nem fix vagy sticky, és nem lóg át más szekcióba. A hero görgetési előrehaladása vezérli a 8–46° közötti kanálmozgást. A hero elhagyása után a rajz is kigördül a képernyőről.
 
 A `prefers-reduced-motion` statikus, köztes pózt ad mindkét megjelenítésben. A dekoráció nem fogad pointer eseményt; a scrollanimáció csak SVG-transzformációkat és a hidraulika végpontjait módosítja, a grafikai blokk méretét nem.
 
 ## Tartalom és képek
 
 Az adatlap és az implementációs brief adatai kerültek az oldalra. Az értékelések kutatási pillanatképek; az árak, készlet és szállítási feltételek telefonos egyeztetést igényelnek. A `szen.jpg` és `zsakosaru.jpg` kisméretű termékfotóként szerepel. A zsúfolt logó és a két kevésbé használható fotó megmaradt az assets mappában, de nem töltődik le az oldallal. A betűk Google Fonts-ról tölthetők be, rendszerbetűs tartalékkal. Ez bemutató oldal, nem hivatalos üzleti webhely.
+
 
 
 
