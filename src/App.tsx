@@ -49,8 +49,8 @@ function App() {
       <a className="header-call" href={phone}><Icon name="phone"/><span>Hívás</span></a>
       <button className="menu-toggle" ref={menuButton} aria-expanded={menu} aria-controls="fo-menu" aria-label={menu ? 'Menü bezárása' : 'Menü megnyitása'} onClick={() => setMenu(!menu)}><span/><span/><span/></button>
     </header>
-    <Excavator />
     <main id="tartalom">
+      <Excavator />
       <section className="hero">
         <div className="hero-content">
           <p className="eyebrow"><span className="small-square"/> ÉPÍTŐANYAG ÉS TÜZELŐANYAG · ESZTERGOM</p>
