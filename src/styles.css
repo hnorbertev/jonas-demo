@@ -26,7 +26,15 @@ main>section>*{position:relative;z-index:2}
 .machine-layer{position:fixed;right:-13vw;top:105px;width:min(76vw,1180px);height:calc(100svh - 105px);z-index:1;pointer-events:none;user-select:none;overflow:hidden;opacity:var(--arm-opacity,.84);mask-image:linear-gradient(90deg,transparent 15%,#000 44%)}
 .excavator{display:block;width:100%;height:100%;overflow:visible}
 @media(min-width:1600px){.machine-layer{right:-190px}}
-@media(min-width:768px) and (max-width:1023px){.machine-layer{right:-36vw;top:100px;width:100vw;opacity:calc(var(--arm-opacity,.84) * .42)}}
-/* Mobile crop gives the bucket its own clear space beneath the hero actions. */
-@media(max-width:767px){.hero-content{padding-bottom:250px}.machine-layer{right:-48px;top:var(--mobile-arm-top,600px);bottom:auto;width:270px;height:245px;opacity:var(--mobile-arm-opacity,.86);mask-image:linear-gradient(90deg,transparent 0%,#000 16%);overflow:hidden}.excavator{overflow:hidden;shape-rendering:optimizeSpeed}}
-
+/* Desktop keeps its page-level layer; smaller screens get a real hero grid item. */
+.hero>.machine-layer{z-index:1}
+@media(max-width:1023px){
+  .hero{overflow:hidden}
+  .hero-content{padding-bottom:24px}
+  .hero>.machine-layer{
+    position:relative;inset:auto;flex:none;align-self:stretch;
+    width:100%;height:clamp(300px,70vw,460px);margin:0 0 24px;
+    opacity:1;mask-image:none;overflow:hidden;contain:paint;
+  }
+  .machine-layer .excavator{width:100%;height:100%;overflow:hidden}
+}

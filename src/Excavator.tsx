@@ -11,10 +11,10 @@ export default function Excavator() {
 
   useEffect(() => {
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
-    const mobile = matchMedia('(max-width: 767px)');
+    const mobile = matchMedia('(max-width: 1023px)');
     let frame = 0, current = 0, target = 0, previous = 0;
     const paint = (progress: number) => {
-      const angle = mobile.matches ? 10 + progress * 28 : 8 + progress * 88;
+      const angle = mobile.matches ? 8 + progress * 57 : 8 + progress * 88;
       arm.current?.setAttribute('transform', `rotate(${-progress * (mobile.matches ? 2 : 5)} 685 205)`);
       bucket.current?.setAttribute('transform', `rotate(${angle} 425 535)`);
       // Cylinder attaches to the bucket bell crank, in the stick's coordinate space.
@@ -36,23 +36,17 @@ export default function Excavator() {
       else { frame = 0; previous = 0; }
     };
     const update = () => {
+      const hero = layer.current?.closest<HTMLElement>('.hero');
+      const heroRect = hero?.getBoundingClientRect();
       const range = document.documentElement.scrollHeight - innerHeight;
-      const progress = range > 0 ? Math.min(1, Math.max(0, scrollY / range)) : 0;
-      // Keep the drawing quiet beneath text once the opening composition scrolls away.
-      // This affects emphasis only: the arm never shrinks into a separate side widget.
+      const progress = mobile.matches && heroRect
+        ? Math.min(1, Math.max(0, -heroRect.top / Math.max(heroRect.height, 1)))
+        : range > 0 ? Math.min(1, Math.max(0, scrollY / range)) : 0;
       const emphasis = Math.max(0, 1 - scrollY / Math.max(innerHeight * .65, 1));
       layer.current?.style.setProperty('--arm-opacity', String(.16 + emphasis * .68));
-      if (mobile.matches) {
-        illustration.current?.setAttribute('viewBox', '205 390 440 425');
-        const trust = document.querySelector('.hero-trust');
-        // The crop's upper-right corner is only the stick; the bucket begins lower,
-        // leaving the trust row and all CTA hit targets clear even on short phones.
-        const top = Math.max(160, (trust?.getBoundingClientRect().bottom ?? innerHeight * .65) - 28);
-        layer.current?.style.setProperty('--mobile-arm-top', `${top}px`);
-        layer.current?.style.setProperty('--mobile-arm-opacity', String(.14 + emphasis * .72));
-      } else {
-        illustration.current?.setAttribute('viewBox', '0 0 1100 850');
-      }
+      // This square composition contains the entire bucket sweep and stick;
+      // only the boom intentionally continues beyond the upper-right edge.
+      illustration.current?.setAttribute('viewBox', mobile.matches ? '150 160 650 650' : '0 0 1100 850');
       if (motion.matches) {
         cancelAnimationFrame(frame); frame = 0; previous = 0;
         current = target = .28; paint(current); return;
@@ -131,3 +125,4 @@ export default function Excavator() {
     </svg>
   </div>;
 }
+
