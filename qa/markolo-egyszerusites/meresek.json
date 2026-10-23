@@ -1,0 +1,477 @@
+[
+  {
+    "phase": "statikus",
+    "name": "390-hero",
+    "angle": "rotate(28.160000000000004 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 5577,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 0,
+    "svg": [
+      47.1015625,
+      503.09375,
+      280.796875,
+      297.8125
+    ],
+    "width": 390
+  },
+  {
+    "phase": "statikus",
+    "name": "390-termekek",
+    "angle": "rotate(28.160000000000004 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 5577,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 1208,
+    "svg": [
+      47.1015625,
+      503.09375,
+      280.796875,
+      297.8125
+    ],
+    "width": 390
+  },
+  {
+    "phase": "statikus",
+    "name": "390-kiszallitas",
+    "angle": "rotate(28.160000000000004 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 5577,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 2356,
+    "svg": [
+      47.1015625,
+      503.09375,
+      280.796875,
+      297.8125
+    ],
+    "width": 390
+  },
+  {
+    "phase": "statikus",
+    "name": "768-hero",
+    "angle": "rotate(28.160000000000004 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 4498,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 0,
+    "svg": [
+      196.5,
+      504.09375,
+      360,
+      381.8125
+    ],
+    "width": 768
+  },
+  {
+    "phase": "statikus",
+    "name": "768-termekek",
+    "angle": "rotate(28.160000000000004 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 4498,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 1065,
+    "svg": [
+      196.5,
+      504.09375,
+      360,
+      381.8125
+    ],
+    "width": 768
+  },
+  {
+    "phase": "statikus",
+    "name": "768-kiszallitas",
+    "angle": "rotate(28.160000000000004 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 4498,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 2008,
+    "svg": [
+      196.5,
+      504.09375,
+      360,
+      381.8125
+    ],
+    "width": 768
+  },
+  {
+    "phase": "statikus",
+    "name": "1440-hero",
+    "angle": "rotate(32.64 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 4732,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 0,
+    "svg": [
+      748.203125,
+      189.5859375,
+      892.796875,
+      616.828125
+    ],
+    "width": 1440
+  },
+  {
+    "phase": "statikus",
+    "name": "1440-termekek",
+    "angle": "rotate(32.64 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 4732,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 1153,
+    "svg": [
+      748.203125,
+      189.5859375,
+      892.796875,
+      616.828125
+    ],
+    "width": 1440
+  },
+  {
+    "phase": "statikus",
+    "name": "1440-kiszallitas",
+    "angle": "rotate(32.64 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 4732,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 2117,
+    "svg": [
+      748.203125,
+      189.5859375,
+      892.796875,
+      616.828125
+    ],
+    "width": 1440
+  },
+  {
+    "phase": "statikus-javitott",
+    "name": "768-hero",
+    "angle": "rotate(28.160000000000004 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 4498,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 0,
+    "svg": [
+      196.5,
+      422.09375,
+      360,
+      381.8125
+    ],
+    "width": 768
+  },
+  {
+    "phase": "statikus-javitott",
+    "name": "390-hero",
+    "angle": "rotate(28.160000000000004 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 5577,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 0,
+    "svg": [
+      47.1015625,
+      426.28125,
+      280.796875,
+      297.8125
+    ],
+    "width": 390
+  },
+  {
+    "phase": "statikus-javitott",
+    "name": "1440-hero",
+    "angle": "rotate(32.64 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 4732,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 0,
+    "svg": [
+      748.203125,
+      189.5859375,
+      892.796875,
+      616.828125
+    ],
+    "width": 1440
+  },
+  {
+    "phase": "statikus-javitott",
+    "name": "1440-hero",
+    "angle": "rotate(32.64 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 4732,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 0,
+    "svg": [
+      834.609375,
+      219.4296875,
+      806.390625,
+      557.140625
+    ],
+    "width": 1440
+  },
+  {
+    "phase": "statikus-javitott",
+    "name": "1440-kiszallitas",
+    "angle": "rotate(32.64 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 4732,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 2117,
+    "svg": [
+      834.609375,
+      219.4296875,
+      806.390625,
+      557.140625
+    ],
+    "width": 1440
+  },
+  {
+    "phase": "statikus-javitott",
+    "name": "768-kiszallitas",
+    "angle": "rotate(28.160000000000004 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 4498,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 2008,
+    "svg": [
+      196.5,
+      422.09375,
+      360,
+      381.8125
+    ],
+    "width": 768
+  },
+  {
+    "phase": "statikus-javitott",
+    "name": "390-kiszallitas",
+    "angle": "rotate(28.160000000000004 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 5577,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 2377,
+    "svg": [
+      47.1015625,
+      426.28125,
+      280.796875,
+      297.8125
+    ],
+    "width": 390
+  },
+  {
+    "phase": "animalt",
+    "name": "390-hero",
+    "angle": "rotate(8 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 5577,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 0,
+    "svg": [
+      47.1015625,
+      426.28125,
+      280.796875,
+      297.8125
+    ],
+    "width": 390
+  },
+  {
+    "phase": "animalt",
+    "name": "390-termekek",
+    "angle": "rotate(25.964615076500483 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 5577,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 1208,
+    "svg": [
+      47.1015625,
+      426.28125,
+      280.796875,
+      297.8125
+    ],
+    "width": 390
+  },
+  {
+    "phase": "animalt",
+    "name": "390-kiszallitas",
+    "angle": "rotate(43.417608468607646 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 5577,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 2340,
+    "svg": [
+      47.1015625,
+      426.28125,
+      280.796875,
+      297.8125
+    ],
+    "width": 390
+  },
+  {
+    "phase": "animalt",
+    "name": "768-hero",
+    "angle": "rotate(8 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 4498,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 0,
+    "svg": [
+      196.5,
+      422.09375,
+      360,
+      381.8125
+    ],
+    "width": 768
+  },
+  {
+    "phase": "animalt",
+    "name": "768-termekek",
+    "angle": "rotate(29.3118399110617 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 4498,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 1065,
+    "svg": [
+      196.5,
+      422.09375,
+      360,
+      381.8125
+    ],
+    "width": 768
+  },
+  {
+    "phase": "animalt",
+    "name": "768-kiszallitas",
+    "angle": "rotate(48.138082025257646 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 4498,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 2008,
+    "svg": [
+      196.5,
+      422.09375,
+      360,
+      381.8125
+    ],
+    "width": 768
+  },
+  {
+    "phase": "animalt",
+    "name": "1440-hero",
+    "angle": "rotate(8 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 4732,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 0,
+    "svg": [
+      834.609375,
+      219.4296875,
+      806.390625,
+      557.140625
+    ],
+    "width": 1440
+  },
+  {
+    "phase": "animalt",
+    "name": "1440-termekek",
+    "angle": "rotate(34.347954836600124 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 4732,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 1153,
+    "svg": [
+      834.609375,
+      219.4296875,
+      806.390625,
+      557.140625
+    ],
+    "width": 1440
+  },
+  {
+    "phase": "animalt",
+    "name": "1440-kiszallitas",
+    "angle": "rotate(56.61586638830898 425 535)",
+    "count": 1,
+    "headerClear": true,
+    "height": 4732,
+    "mask": "none",
+    "overflow": false,
+    "position": "fixed",
+    "scroll": 2117,
+    "svg": [
+      834.609375,
+      219.4296875,
+      806.390625,
+      557.140625
+    ],
+    "width": 1440
+  }
+]

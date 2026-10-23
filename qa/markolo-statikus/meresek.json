@@ -1,0 +1,226 @@
+[
+  {
+    "width": 390,
+    "viewport": 390,
+    "documentWidth": 390,
+    "count": 1,
+    "hero": {
+      "x": 0,
+      "y": 76,
+      "width": 390,
+      "height": 904.203125,
+      "right": 390,
+      "bottom": 980.203125
+    },
+    "content": {
+      "x": 23.390625,
+      "y": 120,
+      "width": 343.21875,
+      "height": 405.203125,
+      "right": 366.609375,
+      "bottom": 525.203125
+    },
+    "trust": {
+      "x": 23.390625,
+      "y": 484.203125,
+      "width": 343.21875,
+      "height": 17,
+      "right": 366.609375,
+      "bottom": 501.203125
+    },
+    "layer": {
+      "x": 23.390625,
+      "y": 525.203125,
+      "width": 343.21875,
+      "height": 390,
+      "right": 366.609375,
+      "bottom": 915.203125
+    },
+    "bucket": {
+      "x": 61.180564880371094,
+      "y": 659.3157348632812,
+      "width": 204.31515502929688,
+      "height": 232.37506103515625,
+      "right": 265.49571990966797,
+      "bottom": 891.6907958984375
+    },
+    "position": "absolute",
+    "pointerEvents": "none",
+    "mask": "none",
+    "filter": "none",
+    "viewBox": "100 130 660 700",
+    "pose": "rotate(22 425 535)",
+    "animations": 0,
+    "inHero": true,
+    "normalPose": "rotate(22 425 535)",
+    "errors": []
+  },
+  {
+    "width": 768,
+    "viewport": 768,
+    "documentWidth": 768,
+    "count": 1,
+    "hero": {
+      "x": 0,
+      "y": 80,
+      "width": 768,
+      "height": 1133.25,
+      "right": 768,
+      "bottom": 1213.25
+    },
+    "content": {
+      "x": 46.078125,
+      "y": 145,
+      "width": 675.84375,
+      "height": 516.25,
+      "right": 721.921875,
+      "bottom": 661.25
+    },
+    "trust": {
+      "x": 46.078125,
+      "y": 615.25,
+      "width": 675.84375,
+      "height": 22,
+      "right": 721.921875,
+      "bottom": 637.25
+    },
+    "layer": {
+      "x": 46.078125,
+      "y": 661.25,
+      "width": 675.84375,
+      "height": 480,
+      "right": 721.921875,
+      "bottom": 1141.25
+    },
+    "bucket": {
+      "x": 314.1798095703125,
+      "y": 841.366455078125,
+      "width": 260.89892578125,
+      "height": 296.72998046875,
+      "right": 575.0787353515625,
+      "bottom": 1138.096435546875
+    },
+    "position": "absolute",
+    "pointerEvents": "none",
+    "mask": "none",
+    "filter": "none",
+    "viewBox": "100 130 660 700",
+    "pose": "rotate(22 425 535)",
+    "animations": 0,
+    "inHero": true,
+    "normalPose": "rotate(22 425 535)",
+    "errors": []
+  },
+  {
+    "width": 1024,
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "count": 1,
+    "hero": {
+      "x": 0,
+      "y": 96,
+      "width": 1024,
+      "height": 804,
+      "right": 1024,
+      "bottom": 900
+    },
+    "content": {
+      "x": 56.3125,
+      "y": 171,
+      "width": 601.5,
+      "height": 576.90625,
+      "right": 657.8125,
+      "bottom": 747.90625
+    },
+    "trust": {
+      "x": 56.3125,
+      "y": 659.90625,
+      "width": 601.5,
+      "height": 22,
+      "right": 657.8125,
+      "bottom": 681.90625
+    },
+    "layer": {
+      "x": 0,
+      "y": 96,
+      "width": 1024,
+      "height": 804,
+      "right": 1024,
+      "bottom": 900
+    },
+    "bucket": {
+      "x": 660.0025024414062,
+      "y": 561.2029418945312,
+      "width": 246.6107177734375,
+      "height": 280.4793701171875,
+      "right": 906.6132202148438,
+      "bottom": 841.6823120117188
+    },
+    "position": "absolute",
+    "pointerEvents": "none",
+    "mask": "none",
+    "filter": "none",
+    "viewBox": "100 130 660 700",
+    "pose": "rotate(22 425 535)",
+    "animations": 0,
+    "inHero": true,
+    "normalPose": "rotate(22 425 535)",
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "viewport": 1440,
+    "documentWidth": 1440,
+    "count": 1,
+    "hero": {
+      "x": 0,
+      "y": 96,
+      "width": 1440,
+      "height": 804,
+      "right": 1440,
+      "bottom": 900
+    },
+    "content": {
+      "x": 79.1875,
+      "y": 171,
+      "width": 807.421875,
+      "height": 612.640625,
+      "right": 886.609375,
+      "bottom": 783.640625
+    },
+    "trust": {
+      "x": 79.1875,
+      "y": 695.640625,
+      "width": 807.421875,
+      "height": 22,
+      "right": 886.609375,
+      "bottom": 717.640625
+    },
+    "layer": {
+      "x": 0,
+      "y": 96,
+      "width": 1440,
+      "height": 804,
+      "right": 1440,
+      "bottom": 900
+    },
+    "bucket": {
+      "x": 929.2164916992188,
+      "y": 431.6552734375,
+      "width": 346.19976806640625,
+      "height": 393.74554443359375,
+      "right": 1275.416259765625,
+      "bottom": 825.4008178710938
+    },
+    "position": "absolute",
+    "pointerEvents": "none",
+    "mask": "none",
+    "filter": "none",
+    "viewBox": "100 130 660 700",
+    "pose": "rotate(22 425 535)",
+    "animations": 0,
+    "inHero": true,
+    "normalPose": "rotate(22 425 535)",
+    "errors": []
+  }
+]
